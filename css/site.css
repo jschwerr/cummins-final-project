@@ -5,3 +5,8 @@ li a.active {
 table tr td {
     vertical-align: top;
 }
+
+.container {
+    margin-left: 10%;
+    margin-top: 2%;
+}

@@ -8,7 +8,6 @@
     UserService.$inject = ['$timeout', '$filter', '$q'];
     function UserService($timeout, $filter, $q) {
 
-        console.log(localStorage);
         var service = {};
 
         service.GetAll = GetAll;

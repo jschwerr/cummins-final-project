@@ -9,51 +9,115 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
-            <h2>Currently Servicing Engine #12345</h2>
+                <div class="col-sm-12">
+                    <h2>Currently Servicing Engine #12345</h2>
+                </div>
             </div>
         </div>
     </div>
+    <br/>
     <div class="row">
         <div class="col-sm-6">
-            <div class="row">
-            <h3>Knowledge Articles</h3>
-            <table class="table" style="width:100%; table-layout:fixed;">
-                <tr>
-                <th width="20%">Article #</th>
-                <th width="35%">Title</th>
-                <th width="45%">Description</th>
-              </tr>
-              <tr>
-                <td width="20%">1</td>
-                <td width="35%" style="overflow:hidden; text-overflow: ellipsis; white-space: nowrap">
-                    <a href="">How to repair engines</a>
-                </td>
-                <td width="45%">This article explains how to fix engines</td>
-              </tr>
-            </table>
+            <div class="col-sm-12">
+                <div class="row">
+                <h3>Knowledge Articles</h3>
+                <table class="table" style="width:100%; table-layout:fixed; max-height: 800px;">
+                    <tr>
+                    <th width="20%">Article #</th>
+                    <th width="30%">Title</th>
+                    <th width="50%">Description</th>
+                  </tr>
+                  <tr>
+                    <td width="20%">1</td>
+                    <td width="30%" style="overflow:hidden; text-overflow: ellipsis; white-space: nowrap">
+                        <a href="https://cumminsengines.com/uploads/docs/Inline/INLINE_7_manual.pdf" target="_blank">How to repair engines</a>
+                    </td>
+                    <td width="50%">This article explains how to fix engines</td>
+                  </tr>
+                    <tr>
+                    <td width="20%">2</td>
+                    <td width="30%" style="overflow:hidden; text-overflow: ellipsis; white-space: nowrap">
+                        <a href="">How to repair engines</a>
+                    </td>
+                    <td width="50%">This article explains how to fix engines</td>
+                  </tr>
+                    <tr>
+                    <td width="20%">3</td>
+                    <td width="30%" style="overflow:hidden; text-overflow: ellipsis; white-space: nowrap">
+                        <a href="">How to repair engines</a>
+                    </td>
+                    <td width="50%">This article explains how to fix engines</td>
+                  </tr>
+                    <tr>
+                    <td width="20%">4</td>
+                    <td width="30%" style="overflow:hidden; text-overflow: ellipsis; white-space: nowrap">
+                        <a href="">How to repair engines</a>
+                    </td>
+                    <td width="50%">This article explains how to fix engines</td>
+                  </tr>
+                </table>
+                </div>
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="row">
-            <h3>Service History</h3>
-            <table class="table" style="display:block;overflow:auto;white-space: nowrap; max-height: 200px;">
-                <tr>
-                    <th>Fault Code</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Notes</th>
-                </tr>
-                <tr>
-                    <td>123456</td>
-                    <td>Test fault code</td>
-                    <td>1/2/2017</td>
-                    <td>This fault code was tested and found in the engine</td>
-                </tr>
-            </table>
-            </div>
-            <div class="row">
-                <h1>Engine KPIs</h1>
-            </div>
+            <div class="col-sm-12">
+                <div class="row">
+                    <h3>Service History</h3>
+                    <table class="table" style="display:block;overflow:auto;white-space: nowrap; max-height: 400px;">
+                        <tr>
+                            <th>Fault Code</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Notes</th>
+                        </tr>
+                        <tr>
+                            <td>123456</td>
+                            <td>Test fault code</td>
+                            <td>1/2/2017</td>
+                            <td>This fault code was tested and found in the engine</td>
+                        </tr>
+                                        <tr>
+                            <td>123456</td>
+                            <td>Test fault code</td>
+                            <td>1/2/2017</td>
+                            <td>This fault code was tested and found in the engine</td>
+                        </tr>
+                                        <tr>
+                            <td>123456</td>
+                            <td>Test fault code</td>
+                            <td>1/2/2017</td>
+                            <td>This fault code was tested and found in the engine</td>
+                        </tr>
+                                        <tr>
+                            <td>123456</td>
+                            <td>Test fault code</td>
+                            <td>1/2/2017</td>
+                            <td>This fault code was tested and found in the engine</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <div class="row" style="max-height: 350px;" ng-show="hasFaultCodes">
+        <div class="col-sm-12">
+            <h3>Engine KPIs</h3>
+            <label for="inKpi">Select a KPI: </label>
+            <select id="inKpi">
+                <option value=""></option>
+                <option value="">Output</option>
+            </select>
+            <div id="chart"></div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 50px; max-height: 350px; text-align: center;" ng-show="!hasFaultCodes">
+        <div class="col-sm-12" ng-if="!pairInProgress">
+            <h3 style="margin-bottom: 20px;">Pair with engine to view KPIs</h3>
+            <button ng-click="pairEngine()" class="btn btn-primary">Begin Pairing</button>
+        </div>
+        <div class="col-sm-12" ng-if="pairInProgress">
+            <p>Pairing in Progress</p>
+            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         </div>
     </div>
 </div>

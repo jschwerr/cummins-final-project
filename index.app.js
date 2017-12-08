@@ -1,7 +1,62 @@
 (function () {
     // declare an angular module for the site
     var app = angular.module('cumminsFinalProject', ['ui.router', 'ngCookies']);
+    var hasServiceEventPromise = function() {
+        return new Promise((resolve, reject) => {
+            window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+            var request, db; 
+            if(!window.indexedDB)
+            {
+                console.log("Your Browser does not support IndexedDB");
+            }
+            else {
+                request = window.indexedDB.open("cumminsDB", 1);
+
+                request.onsuccess = function(event){
+                    db = event.target.result;
+                    var objectStore = db.transaction("serviceEvent").objectStore("serviceEvent");
+                    objectStore.openCursor().onsuccess = function (e) {
+                        var cursor = e.target.result;
+                        if (cursor) {
+                            resolve(true);
+                        }
+                        else {
+                            resolve(false);
+                        }
+                    };
+                };
+            }
+        })
+    };
     
+    var hasFaultCodesPromise = function() {
+        return new Promise((resolve, reject) => {
+            window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+            var request, db; 
+            if(!window.indexedDB)
+            {
+                console.log("Your Browser does not support IndexedDB");
+            }
+            else {
+                request = window.indexedDB.open("cumminsDB", 1);
+
+                request.onsuccess = function(event){
+                    db = event.target.result;
+                    var objectStore = db.transaction("serviceEventFaultCode").objectStore("serviceEventFaultCode");
+                    objectStore.openCursor().onsuccess = function (e) {
+                        var cursor = e.target.result;
+                        if (cursor) {
+                            resolve(true);
+                        }
+                        else {
+                            resolve(false);
+                        }
+                    };
+                };
+            }
+        })
+    };
+
     app.controller('indexCtrl', function($cookies, $scope, $location, $q) {;
         $scope.hasServiceEvent = false;
         // keep user logged in after page refresh
@@ -9,139 +64,29 @@
             return ($location.path().substr(0, path.length) === path) ? 'active' : '';
         }
         
+        $scope.$on('$stateChangeStart', function() {
+            console.log('state change');
+            hasServiceEventPromise().then(val => {
+                $scope.hasServiceEvent = val;
+                $scope.$apply();
+            });
+        });
+                   
         $scope.isLoggedIn = function () {
-            var path = '/login';
-            return !($location.path().substr(0, path.length) === path);
+            var login = '/login';
+            var register = '/register'
+            return !($location.path().substr(0, login.length) === login || $location.path().substr(0, register.length) === register);
         }
         
-        var hasServiceEventPromise = function() {
-            return new Promise((resolve, reject) => {
-                    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-                    var request, db; 
-                    var hasServiceEvent = false;
-                    if(!window.indexedDB)
-                    {
-                        console.log("Your Browser does not support IndexedDB");
-                    }
-                    else {
-                        request = window.indexedDB.open("cumminsDB", 1);
-
-                        request.onsuccess = function(event){
-                            db = event.target.result;
-                            var objectStore = db.transaction("serviceEvent").objectStore("serviceEvent");
-                            objectStore.openCursor().onsuccess = function (e) {
-                                var cursor = e.target.result;
-                                hasServiceEvent = true;
-                                resolve(hasServiceEvent);
-                                if (cursor) {
-                                    cursor.continue();
-                                }
-                            };
-                        };
-                    }
-                })
-            };
-        
         hasServiceEventPromise().then(val => {
-            console.log('hello');
             $scope.hasServiceEvent = val;
             $scope.$apply();
         });
-    
-        function read() {
-            var transaction = db.transaction(["employee"]);
-            var objectStore = transaction.objectStore("employee");
-            var request = objectStore.get("00-03");
-            
-            request.onerror = function(event) {
-               alert("Unable to retrieve daa from database!");
-            };
-            
-            request.onsuccess = function(event) {
-               // Do something with the request.result!
-               if(request.result) {
-                  alert("Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email);
-               }
-               
-               else {
-                  alert("Kenny couldn't be found in your database!");
-               }
-            };
-         }
-         
-         function readAll() {
-            var objectStore = db.transaction("employee").objectStore("employee");
-            
-            objectStore.openCursor().onsuccess = function(event) {
-               var cursor = event.target.result;
-               
-               if (cursor) {
-                  alert("Name for id " + cursor.key + " is " + cursor.value.name + ", Age: " + cursor.value.age + ", Email: " + cursor.value.email);
-                  cursor.continue();
-               }
-               
-               else {
-                  alert("No more entries!");
-               }
-            };
-         }
-         
-         function add() {
-            var request = db.transaction(["employee"], "readwrite")
-            .objectStore("employee")
-            .add({ id: "00-03", name: "Kenny", age: 19, email: "kenny@planet.org" });
-            
-            request.onsuccess = function(event) {
-               alert("Kenny has been added to your database.");
-            };
-            
-            request.onerror = function(event) {
-               alert("Unable to add data\r\nKenny is aready exist in your database! ");
-            }
-         }
-         
-         function remove() {
-            var request = db.transaction(["employee"], "readwrite")
-            .objectStore("employee")
-            .delete("00-03");
-            
-            request.onsuccess = function(event) {
-               alert("Kenny's entry has been removed from your database.");
-            };
-         }
     });
     // create URL routes using angulars routeProvider service
     // angular routes and template instructions derived from: https://scotch.io/tutorials/single-page-apps-with-angularjs-routing-and-templating
     // additional help from: https://www.undefinednull.com/2014/02/17/resolve-in-angularjs-routes-explained-as-story/
     app.config(function($stateProvider, $locationProvider) {
-                
-        var hasServiceEventPromise = function() {
-            return new Promise((resolve, reject) => {
-                    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-                    var request, db; 
-                    if(!window.indexedDB)
-                    {
-                        console.log("Your Browser does not support IndexedDB");
-                    }
-                    else {
-                        request = window.indexedDB.open("cumminsDB", 1);
-
-                        request.onsuccess = function(event){
-                            db = event.target.result;
-                            var objectStore = db.transaction("serviceEvent").objectStore("serviceEvent");
-                            objectStore.openCursor().onsuccess = function (e) {
-                                var cursor = e.target.result;
-                                if (cursor) {
-                                    resolve(true);
-                                }
-                                else {
-                                    resolve(false);
-                                }
-                            };
-                        };
-                    }
-                })
-            };
         
         $stateProvider
         .state('home', {
@@ -149,19 +94,27 @@
             templateUrl: 'views/home.html',
             controller: 'homeCtrl',
             resolve: {
-                hasServiceEvent: function() {return hasServiceEventPromise().then(function(val) {return val})}
+                hasServiceEvent: function() {return hasServiceEventPromise().then(function(val) {return val})},
+                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})},                
             }
         })
         .state('intake', {
             url:'/intake',
             templateUrl: 'views/intake.html',
-            controller: 'intakeCtrl'
+            controller: 'intakeCtrl',
+            resolve: {
+                hasServiceEvent: function() {return hasServiceEventPromise().then(function(val) {return val})},
+                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})},                
+            }
         })
         .state('diagnose', {
             url:'/diagnose',
             templateUrl: 'views/register.html',
             controller: 'registerCtrl',
-            controllerAs: 'vm'
+            resolve: {
+                hasServiceEvent: function() {return hasServiceEventPromise().then(function(val) {return val})},
+                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})},                
+            }
         })
         .state('job-plan', {
             url:'/job-plan',
@@ -222,7 +175,9 @@
             request.onupgradeneeded   = function(event){
                 alert("Upgrading");
                 db = event.target.result;
-                db.createObjectStore("serviceEvent");
+                db.createObjectStore("serviceEvent", {keyPath: 'engineCode'});
+                db.createObjectStore("serviceHistory");
+                db.createObjectStore("serviceEventFaultCode", {keyPath: ['engineCode', 'faultCode', 'date']});
             };
 
         }
