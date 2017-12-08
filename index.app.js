@@ -14,7 +14,7 @@
 
                 request.onsuccess = function(event){
                     db = event.target.result;
-                    var objectStore = db.transaction("serviceEvent").objectStore("serviceEvent");
+                    var objectStore = db.transaction("serviceHistory").objectStore("serviceHistory");
                     objectStore.openCursor().onsuccess = function (e) {
                         var cursor = e.target.result;
                         if (cursor) {
@@ -95,7 +95,25 @@
             controller: 'homeCtrl',
             resolve: {
                 hasServiceEvent: function() {return hasServiceEventPromise().then(function(val) {return val})},
-                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})},                
+                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})},
+                engineServiceHistory: function($http) {
+                    return hasServiceEventPromise().then(function(val) {
+                        if (val) {
+                            return $http.get('data/engineServiceHistory.json')
+                                .then(
+                                    function(res) {
+                                        return res.data;
+                                    },
+                                    function(err) {
+                                        console.log(err);
+                                        return false;
+                                    });
+                        }
+                        else {
+                            return false;
+                        }
+                    });
+                }
             }
         })
         .state('intake', {
@@ -104,16 +122,16 @@
             controller: 'intakeCtrl',
             resolve: {
                 hasServiceEvent: function() {return hasServiceEventPromise().then(function(val) {return val})},
-                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})},                
+                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})}                
             }
         })
         .state('diagnose', {
             url:'/diagnose',
-            templateUrl: 'views/register.html',
+            templateUrl: 'views/diagnose.html',
             controller: 'registerCtrl',
             resolve: {
                 hasServiceEvent: function() {return hasServiceEventPromise().then(function(val) {return val})},
-                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})},                
+                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})}                
             }
         })
         .state('job-plan', {
@@ -176,7 +194,7 @@
                 alert("Upgrading");
                 db = event.target.result;
                 db.createObjectStore("serviceEvent", {keyPath: 'engineCode'});
-                db.createObjectStore("serviceHistory");
+                db.createObjectStore("serviceHistory", {keyPath: ['engineCode', 'faultCode', 'date']});
                 db.createObjectStore("serviceEventFaultCode", {keyPath: ['engineCode', 'faultCode', 'date']});
             };
 

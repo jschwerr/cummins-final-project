@@ -6,11 +6,12 @@
     var app = angular.module('cumminsFinalProject'); //array has dependency; this create a module called app
                                         //angular.module('app'); will look up a module called app
 
-    app.controller('homeCtrl', function($scope, hasServiceEvent, hasFaultCodes, $timeout){
+    app.controller('homeCtrl', function($scope, hasServiceEvent, hasFaultCodes, engineServiceHistory, $timeout){
         $scope.hasServiceEvent = hasServiceEvent;
         $scope.hasFaultCodes = hasFaultCodes;
         
-        console.log(hasFaultCodes);
+        $scope.engineServiceHistory = engineServiceHistory;
+        console.log($scope.engineServiceHistory);
         
         $scope.pairEngine = function() {
             $scope.pairInProgress = true;

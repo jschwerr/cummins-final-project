@@ -1,0 +1,42 @@
+[  
+   {  
+      "engineCode":"12345",
+      "faultCode":"12",
+      "date":"2017-12-08",
+      "priority":2,
+      "faultDescription":"Low Oil",
+      "notes":"Refilled oil"
+   },
+   {  
+      "engineCode":"12345",
+      "faultCode":"11",
+      "date":"2017-12-08",
+      "priority":1,
+      "faultDescription":"Fuel Pressure Sensor Voltage Low",
+      "notes":"Recharged sensor"
+   },
+   {  
+      "engineCode":"12345",
+      "faultCode":"3",
+      "date":"2017-10-08",
+      "priority":1,
+      "faultDescription":"Water in Fuel Detected",
+      "notes":"Drained fuel"
+   },
+   {  
+      "engineCode":"12345",
+      "faultCode":"4",
+      "date":"2017-12-08",
+      "priority":2,
+      "faultDescription":"Engine Oil Pressure",
+      "notes":"Refilled oil"
+   },
+   {  
+      "engineCode":"12345",
+      "faultCode":"23",
+      "date":"2017-12-08",
+      "priority":2,
+      "faultDescription":"Low Oil",
+      "notes":"Refilled oil"
+   }
+]
