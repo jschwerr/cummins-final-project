@@ -1,6 +1,6 @@
 [  
    {  
-      "engineCode":"12345",
+      "engineSerialNumber":"12345",
       "faultCode":"12",
       "date":"2017-12-08",
       "priority":2,
@@ -8,7 +8,7 @@
       "notes":"Refilled oil"
    },
    {  
-      "engineCode":"12345",
+      "engineSerialNumber":"12345",
       "faultCode":"11",
       "date":"2017-12-08",
       "priority":1,
@@ -16,7 +16,7 @@
       "notes":"Recharged sensor"
    },
    {  
-      "engineCode":"12345",
+      "engineSerialNumber":"12345",
       "faultCode":"3",
       "date":"2017-10-08",
       "priority":1,
@@ -24,7 +24,7 @@
       "notes":"Drained fuel"
    },
    {  
-      "engineCode":"12345",
+      "engineSerialNumber":"12345",
       "faultCode":"4",
       "date":"2017-12-08",
       "priority":2,
@@ -32,7 +32,7 @@
       "notes":"Refilled oil"
    },
    {  
-      "engineCode":"12345",
+      "engineSerialNumber":"12345",
       "faultCode":"23",
       "date":"2017-12-08",
       "priority":2,

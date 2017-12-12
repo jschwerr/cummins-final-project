@@ -1,0 +1,68 @@
+[
+    {
+        "jobPlanID": 1,
+        "summary": "Restore engine accelleration followed by drain water from fuel",
+        "steps": [
+            {
+                "stepID": 1,
+                "title": "Adjust Carburetor",
+                "description": "Carburetor should be adjusted to within .25 in of specification."
+            },
+            {
+                "stepID": 2,
+                "title": "Defective Accelerating Pump",
+                "description": "Test accelerating pump to determine if it needs to be replaced."
+            },
+            {
+                "stepID": 3,
+                "title": "Cold Oil",
+                "description": "Oil temperature should remain around 160 degrees F."
+            }
+        ],
+        "confidenceScore": ".902"
+    },
+    {
+        "jobPlanID": 2,
+        "summary": "Relieve high oil pressure",
+        "steps": [
+            {
+                "stepID": 4,
+                "title": "Improper Grade of Oil",
+                "description": "Oil for this engine should be 10w30."
+            },
+            {
+                "stepID": 5,
+                "title": "Pressure Relief Valve Stuck",
+                "description": "Determine whether the pressure relief valve is stuck in a closed position."
+            },
+            {
+                "stepID": 3,
+                "title": "Cold Oil",
+                "description": "Oil temperature should remain around 160 degrees F."
+            }
+        ],
+        "confidenceScore": ".752"
+    },
+    {
+        "jobPlanID": 3,
+        "summary": "Adjust engine power followed by stabalize oil pressure",
+        "steps": [
+            {
+                "stepID": 6,
+                "title": "Mixture too Rich or too Lean",
+                "description": "Check the fuel mixture and ensure a normal consistency."
+            },
+            {
+                "stepID": 7,
+                "title": "Leaks in Induction System",
+                "description": "Check for leaks in the induction system and patch as necessary."
+            },
+            {
+                "stepID": 8,
+                "title": "Defective Spark Plugs",
+                "description": "Oil temperature should remain around 160 degrees F."
+            }
+        ],
+        "confidenceScore": ".958"
+    }
+]

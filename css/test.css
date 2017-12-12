@@ -1,0 +1,50 @@
+.fixed-header-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.fixed-header-table .table-header {
+    flex: 0 100% auto;
+    overflow-y: scroll; /* Prevents scrollbars from causing column misalignment */
+    margin: auto;
+}
+
+.fixed-header-table .table-body {
+    flex: 1;
+    overflow-y: scroll; /* Prevents scrollbars from causing column misalignment */
+}
+
+.fixed-header-table .table-footer {
+    flex: 1 100% auto;
+}
+
+/* Support Bootstrap's table class */
+.fixed-header-table table,
+.fixed-header-table .table {
+    table-layout: fixed; /* Prevents columns from adjusting to content */
+    margin: 0;
+}
+
+.fixed-header-table table td {
+    overflow: hidden;
+}
+
+.fixed-header-table table th {
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+}
+
+.fixed-header-table .resize-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0px;
+    width: 6px;
+    cursor: ew-resize;
+}
+
+.fixed-header-table .resize-handle.dragging,
+.fixed-header-table .resize-handle:hover {
+    background-color: RGBA(75, 128, 255, .5);
+}

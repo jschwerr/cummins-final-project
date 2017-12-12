@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-sm-8 offset-sm-2" ng-show="!hasServiceEvent">
             <h1>Intake Information:</h1>
@@ -22,30 +22,47 @@
         </div>
     </div>
     <div class="row" ng-show="hasServiceEvent">
-        <div class="col-sm-6">
-            <h3>Intake Info</h3>
-            <table>
-                <tr>
-                    <td><strong>Engine Serial Number: </strong></td>
-                    <td>12345</td>
-                </tr>
-                <tr>
-                    <td><strong>Engine Name: </strong></td>
-                    <td>12345</td>
-                </tr>
-                <tr>
-                    <td><strong>Intake Notes: </strong></td>
-                    <td>12345</td>
-                </tr>
-            </table>
+        <div class="col-sm-4">
+            <div class="col-sm-12">
+                <h3>Intake Info</h3>
+                <table id="intk-table">
+                    <tr>
+                        <td><strong>Engine Serial Number: </strong></td>
+                        <td>12345</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Engine Name: </strong></td>
+                        <td>E59-52J-TWINV8</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Intake Notes: </strong></td>
+                        <td>Notes about this engine will be written here.</td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div clas="col-sm-6">
-            <h3>Service History</h3>
-            <table>
-                <tr>
-                    <th>Test</th>
-                </tr>
-            </table>
+        <div class="col-sm-8">
+            <div class="col-sm-12">
+                <h3>Service History</h3>
+                <table id="intk-sh-table" class="table table-striped" fixed-header>
+                    <thead>
+                        <tr>
+                            <th class="intk-sh-date">Date</th>
+                            <th class="intk-sh-fault-code">Fault Code</th>
+                            <th class="intk-sh-description">Description</th>
+                            <th class="intk-sh-notes">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="intk-sh-date">1/2/2017</td>
+                            <td class="intk-sh-fault-code">123456</td>
+                            <td class="intk-sh-description">Test fault code</td>
+                            <td class="intk-sh-notes">This fault code was tested and found in the engine</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>            
         </div>
     </div>
 </div>

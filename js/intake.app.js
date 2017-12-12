@@ -13,7 +13,6 @@
                     function(res) {
                         indexedDB.add('serviceHistory', res.data)
                             .then(function(){
-                                alert('records added');
                                 $state.go($state.current, {}, {reload: true});
                             });
                     }

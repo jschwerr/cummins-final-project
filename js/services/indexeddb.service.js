@@ -30,13 +30,46 @@
             };
         } 
        
-        this.readAll = function() {
-           
+        this.readAll = function(storeName) {
+            var deffered = $q.defer();
+            
+            var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+            var records = [];
+            
+            if (!indexedDB) {
+                window.alert("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
+            }
+
+            var db;
+            var request = indexedDB.open("cumminsDB", 1);
+
+            request.onerror = function(event) {
+                console.log("error: ");
+            };
+            
+            request.onsuccess = function(event) {
+                db = request.result;
+                var objectStore = db.transaction(storeName).objectStore(storeName);
+                
+                objectStore.openCursor().onsuccess = function(event) {
+                    var cursor = event.target.result;
+                    
+                    if (cursor) {
+                        records.push(cursor.value);
+                        cursor.continue();
+                    }
+                    
+                    else {
+                        deffered.resolve(records);
+                    }
+                }
+            }
+            
+            return deffered.promise;
         }
        
         this.add = function(storeName, records) {
-            
-            console.log(records);
+
             var deferred = $q.defer();
             var addCalls = [];
             
@@ -90,7 +123,7 @@
         this.objectStoreHasData = function() {
            
         }
-    }   ;
+    };
 })();
 //
 //        function read() {

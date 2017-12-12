@@ -1,6 +1,6 @@
 (function () {
     // declare an angular module for the site
-    var app = angular.module('cumminsFinalProject', ['ui.router', 'ngCookies']);
+    var app = angular.module('cumminsFinalProject', ['ui.router', 'ngCookies', 'anguFixedHeaderTable', 'ui.bootstrap']);
     var hasServiceEventPromise = function() {
         return new Promise((resolve, reject) => {
             window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
@@ -42,7 +42,7 @@
 
                 request.onsuccess = function(event){
                     db = event.target.result;
-                    var objectStore = db.transaction("serviceEventFaultCode").objectStore("serviceEventFaultCode");
+                    var objectStore = db.transaction("engineFaultCode").objectStore("engineFaultCode");
                     objectStore.openCursor().onsuccess = function (e) {
                         var cursor = e.target.result;
                         if (cursor) {
@@ -59,13 +59,12 @@
 
     app.controller('indexCtrl', function($cookies, $scope, $location, $q) {;
         $scope.hasServiceEvent = false;
-        // keep user logged in after page refresh
+                                                                           
         $scope.getClass = function (path) {
-            return ($location.path().substr(0, path.length) === path) ? 'active' : '';
+            return ($location.path() === path) ? 'active' : '';
         }
         
         $scope.$on('$stateChangeStart', function() {
-            console.log('state change');
             hasServiceEventPromise().then(val => {
                 $scope.hasServiceEvent = val;
                 $scope.$apply();
@@ -96,23 +95,31 @@
             resolve: {
                 hasServiceEvent: function() {return hasServiceEventPromise().then(function(val) {return val})},
                 hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})},
-                engineServiceHistory: function($http) {
+                engineServiceHistory: function(indexedDB) {
                     return hasServiceEventPromise().then(function(val) {
                         if (val) {
-                            return $http.get('data/engineServiceHistory.json')
-                                .then(
-                                    function(res) {
-                                        return res.data;
-                                    },
-                                    function(err) {
-                                        console.log(err);
-                                        return false;
+                            return indexedDB
+                                    .readAll('serviceHistory')
+                                    .then(function(res) {
+                                        return res;
                                     });
+                                    
                         }
                         else {
                             return false;
                         }
                     });
+                },
+                engineData: function($http) {
+                    return $http.get('data/engineSensorData.json')
+                        .then(
+                            function(res) {
+                                return res.data;
+                            },
+                            function(err) {
+                                alert(err);
+                            }
+                    );
                 }
             }
         })
@@ -128,23 +135,57 @@
         .state('diagnose', {
             url:'/diagnose',
             templateUrl: 'views/diagnose.html',
-            controller: 'registerCtrl',
+            controller: 'diagnoseCtrl',
             resolve: {
-                hasServiceEvent: function() {return hasServiceEventPromise().then(function(val) {return val})},
-                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})}                
+                hasFaultCodes: function() {return hasFaultCodesPromise().then(function(val) {return val})},
+                engineData: function($http) {
+                    return $http.get('data/engineSensorData.json')
+                        .then(
+                            function(res) {
+                                return res.data;
+                            },
+                            function(err) {
+                                alert(err);
+                            }
+                    );
+                },
+                engineFaultCodes: function($http) {
+                    return $http.get('data/engineFaultCodes.json')
+                        .then(
+                            function(res) {
+                                return res.data;
+                            },
+                            function(err) {
+                                console.log(err);
+                                return [];
+                            }
+                        )
+                }
             }
         })
         .state('job-plan', {
             url:'/job-plan',
-            templateUrl: 'views/register.html',
-            controller: 'registerCtrl',
-            controllerAs: 'vm'
+            templateUrl: 'views/job-plan.html',
+            controller: 'jobPlanCtrl',
+            resolve: {
+                jobPlans: function($http) {
+                    return $http.get('data/jobPlans.json')
+                        .then(
+                            function(res) {
+                                return res.data;
+                            },
+                            function(err) {
+                                console.log(err);
+                                return [];
+                            }
+                        )
+                }
+            }
         })
         .state('repair', {
             url:'/repair',
-            templateUrl: 'views/register.html',
-            controller: 'registerCtrl',
-            controllerAs: 'vm'
+            templateUrl: 'views/repair.html',
+            controller: 'repairCtrl',
         })
         .state('invoice', {
             url:'/invoice',
@@ -191,11 +232,10 @@
             };
 
             request.onupgradeneeded   = function(event){
-                alert("Upgrading");
                 db = event.target.result;
-                db.createObjectStore("serviceEvent", {keyPath: 'engineCode'});
-                db.createObjectStore("serviceHistory", {keyPath: ['engineCode', 'faultCode', 'date']});
-                db.createObjectStore("serviceEventFaultCode", {keyPath: ['engineCode', 'faultCode', 'date']});
+                db.createObjectStore("intakeInfo", {keyPath: 'engineSerialNumber'});
+                db.createObjectStore("serviceHistory", {keyPath: ['engineSerialNumber', 'faultCode', 'date']});
+                db.createObjectStore("engineFaultCode", {keyPath: ['engineSerialNumber', 'faultCode']});
             };
 
         }

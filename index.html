@@ -1,66 +1,76 @@
 <html>
 <head>
+    <title>Cummins - Guidanz</title>
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cummins - Guidanz</title>
-
-    <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" rel="stylesheet">
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="vendor/highcharts/css/highcharts.css" rel="stylesheet">
     <link href="css/site.css" rel="stylesheet">
     
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/angular/angular.js"></script>
     <script src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="vendor/angular-cookies/angular-cookies.min.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>  
+    <script src="vendor/highcharts/highcharts.js"></script>
+    <script src="vendor/highcharts/modules/no-data-to-display.js"></script>
+    <script src="vendor/angu-fixed-header-table/angu-fixed-header-table.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.9.0.js"></script>
+        
     <script src="index.app.js"></script>
     <script src="js/home.app.js"></script>
     <script src="js/intake.app.js"></script>
+    <script src="js/diagnose.app.js"></script>
+    <script src="js/repair.app.js"></script>
     <script src="js/login.app.js"></script>
     <script src="js/register.app.js"></script>
+    <script src="js/job-plan.app.js"></script>
+   
     <script src="js/services/authentication.service.js"></script>
     <script src="js/services/flash.service.js"></script>
     <script src="js/services/indexeddb.service.js"></script>
-    <script src="https://code.highcharts.com/stock/highstock.js"></script>
-    <script src="http://code.highcharts.com/modules/no-data-to-display.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.1/css/highcharts.css">
-    <!-- Real user service that uses an api -->
-    <!-- <script src="app-services/user.service.js"></script> -->
-
-    <!-- Fake user service for demo that uses local storage -->
     <script src="js/services/user.service.local-storage.js"></script>
+    <script src="js/directives/noscoperepeat.directive.js"></script>
+    <script src="js/services/decamelize.filter.js"></script>
     
     <link rel="manifest" href="manifest.json">
     <base href="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body ng-app="cumminsFinalProject" style="margin-bottom: 70px;">
     
     <div style="position: fixed; top: 0;left: 0;z-index: 999;width: 100%;height:200px;">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" ng-controller="indexCtrl">
+        <nav id="nav1" class="navbar navbar-expand-lg navbar-light bg-light" ng-controller="indexCtrl">
           <div class="navbar-collapse" id="navbarSupportedContent">
             <a class="navbar-brand" href="#">
                 <img ng-src="img/cummins-logo-bw.png" width="50" height="50" alt="">
             </a>
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a ui-sref="home"><span style="font-size:2vw;">Guidanz Dashboard</span></a>
+              <li class="nav-item mx-0 mx-lg-1">
+                <a ng-class="getClass('/')" ui-sref="home" class="nav-link py-3 px-0 px-lg-3 rounded">CDS Dashboard</a>
+              </li>
+              <li class="nav-item mx-0 mx-lg-1">
+                <a ui-sref="home" class="nav-link py-3 px-0 px-lg-3 rounded">Knowledge Articles</a>
+              </li>
+              <li class="nav-item mx-0 mx-lg-1">
+                <a ui-sref="home" class="nav-link py-3 px-0 px-lg-3 rounded">Engine Manual</a>
               </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              <input class="form-control mr-sm-2" type="search" placeholder="Search CDS" aria-label="Search">
+              <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <a ui-sref="login" class="btn btn-primary my-2 my-lg-0" ng-show="isLoggedIn()">Logout</a>
+            <a ui-sref="login" class="btn btn-primary ml-5 my-2 my-lg-0" ng-show="isLoggedIn()">Logout</a>
           </div>
         </nav>
 
-        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase" id="mainNav" ng-show="hasServiceEvent" ng-controller="indexCtrl">
+        <nav id="nav2" class="navbar navbar-expand-lg" id="mainNav" ng-show="hasServiceEvent" ng-controller="indexCtrl">
             <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               Menu
               <i class="fa fa-bars"></i>

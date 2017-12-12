@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 offset-sm-1">
+            <div class="row">
+                <div class="col-sm-10">
+                    <h1>Step No. {{currentIndex + 1}}</h1>
+                    <h3 style="display:inline;">{{jobPlan.steps[currentIndex].title}}</h3>
+                    <i style="cursor: pointer" class="fa fa-question-circle-o" aria-hidden="true" ng-click="togglePopup()"></i> 
+                    <div class="ka-popup" ng-show="showPopup">
+                        <h4>Relevant Knowledge Articles</h4>
+                        <div class="ka-article-list">
+                            <div ng-repeat="article in knowledgeArticles">
+                                <a href="">{{article.title}}</a>
+                                <p>{{article.preview}}</p>
+                                <hr ng-if="!$last">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-10">
+                    <br/>
+                    {{jobPlan.steps[currentIndex].description}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-10">
+                    <br/>
+                    <label name="comments" for="comments">Comments:</label>
+                    <textarea class="form-control" id="comments" placeholder="Enter comments"></textarea>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-10">
+                    <button class="btn" ng-class="currentIndex > 0 ? 'btn-primary' : 'btn-disabled'" ng-click="previousStep()">Previous step</button>
+                    <div class="pull-right" ng-show="currentIndex < jobPlan.steps.length - 1">
+                        <button class="btn btn-primary" ng-click="showForm('skip')">Skip step</button>
+                        <button class="btn btn-primary" ng-click="showForm('continue')">Complete step</button>
+                    </div>           
+                    <div class="pull-right" ng-show="currentIndex >= jobPlan.steps.length - 1">
+                        <button class="btn btn-primary" ng-click="showForm('complete')">Complete plan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

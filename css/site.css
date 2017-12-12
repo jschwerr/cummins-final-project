@@ -1,12 +1,331 @@
-li a.active {
-    background-color: aqua;
+/*general styling*/
+:root {
+    --cummins-black: #252120;
+    --cummins-red: #B50E00;
+    --cummins-dark-red: #800000;
+    --cummins-gray: #5F5A57;
+    --cummins-dark-gray: #484848;
+    --cummins-white: #FFFFFF;
+}
+
+body {
+    margin-bottom: 30px;
+}
+
+a, a:hover, .btn-link, .btn-link:hover {
+    color: var(--cummins-red);
+}
+
+#table-container {
+    background-color: #FFF;
+    height: 400px;
+    position: relative;
+    display: flex;
+}
+
+.form-control:focus {
+    border-color: var(--cummins-dark-red);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(181, 14, 0, 0.5);
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--cummins-red);
+    border-color: var(--cummins-red);
+}
+
+.btn-disabled {
+    color: grey;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: var(--cummins-dark-red) !important;
+    border-color: var(--cummins-dark-red) !important;
 }
 
 table tr td {
     vertical-align: top;
 }
 
-.container {
-    margin-left: 10%;
-    margin-top: 2%;
+.container-fluid {
+    margin-top: 10px;
+}
+
+.action-needed {
+    text-align: center; 
+    margin-top: 70px;
+}
+
+body ::-webkit-scrollbar-track
+{
+	border-radius: 6px;
+	background-color: #F5F5F5;
+}
+
+body ::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+body ::-webkit-scrollbar-thumb
+{
+	border-radius: 6px;
+	background-color: #E1E1E1;
+}
+
+/*index template*/
+#nav1 li a.active {
+    color: var(--cummins-red);
+}
+
+#nav2 {
+    background-color: var(--cummins-red);
+    padding-left: 30px;
+}
+
+#nav2 li a.active {
+    background-color: var(--cummins-gray);
+}
+
+#nav2 li a.active:hover {
+    color: var(--cummins-white);
+}
+
+#nav2 a {
+    color: var(--cummins-white);
+}
+
+#nav2 a:hover {
+    color: var(--cummins-black);
+}
+
+/*home view*/
+#ka-table {
+    width:100%; 
+    table-layout:fixed;
+    max-height: 400px;
+}
+.ka-article-num {
+    width: 20%;
+}
+
+.ka-title {
+    width: 30%;
+}
+
+.ka-description {
+    width: 50%;
+}
+
+.ka-title {
+    overflow:hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+#sh-table tbody {
+    max-height: 400px;
+}
+
+.sh-date {
+    width: 20%;
+}
+
+.sh-fault-code {
+    width: 20%;
+}
+
+.sh-description {
+    width: 30%;
+}
+
+.sh-notes {
+    width: 30%;
+}
+
+#home-chart {
+    height: 300px;
+}
+/*intake view*/
+#intk-table {
+    width:100%; 
+    table-layout:fixed;
+}
+
+#intk-table td {
+    padding: 5px 5px 5px 0px;
+}
+
+#intk-table tr td:nth-child(1) {
+    width: 50%;
+}
+
+#intk-table tr td:nth-child(2) {
+    width: 50%;
+}
+
+#intk-sh-table {
+    max-height: 400px;
+}
+
+.intk-sh-fault-code {
+    width: 15%
+}
+
+.intk-sh-date {
+    width: 15%
+}
+
+.intk-sh-description {
+    width: 35%
+}
+
+.intk-sh-notes {
+    width: 35%
+}
+
+/*diagnose view*/
+#dg-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.dg-fault-code {
+    width: 25%;
+}
+
+.dg-priority {
+    width: 20%
+}
+
+.dg-description {
+    width: 55%;
+}
+
+#diagnose-chart {
+    height: 300px;
+}
+
+/*job plan view*/
+td.jp-steps {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#jp-other-table tbody tr {
+    cursor: pointer;
+}
+
+.jp-link {
+    border: none !important;
+    background-color: white;
+}
+/*repair view*/
+.ka-popup {
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+.ka-article-list {
+    max-height: 200px;
+    overflow: auto;
+    box-shadow: .5px .5px 2px 0px var(--cummins-black);
+    padding: 5px;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+
+/*repair view*/
+/* client form modal adapted from: http://bl.ocks.org/rnkoaa/8333940 and http://embed.plnkr.co/ZrydC5UExqEPvVg7PXSq/*/
+
+/* The Modal (background) */
+/* client form modal adapted from: http://bl.ocks.org/rnkoaa/8333940 and http://embed.plnkr.co/ZrydC5UExqEPvVg7PXSq/*/
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #990000;
+    color: white;
+}
+
+.modal-body {
+    padding: 2px 16px;
+}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #990000;
+    color: white;
+}
+
+.fade.in {
+  opacity: 1;
+}
+
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.modal-backdrop .fade .in {
+  opacity: 0.5 !important;
+}
+
+
+.modal-backdrop.fade {
+    opacity: 0.5 !important;
 }

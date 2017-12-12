@@ -1,0 +1,26 @@
+[
+    {
+        "engineSerialNumber": "12345",
+        "faultCode": 23,
+        "description": "Water in fuel",
+        "priority": 1
+    },
+    {
+        "engineSerialNumber": "12345",
+        "faultCode": 11,
+        "description": "High oil pressure",
+        "priority": 2
+    },
+    {
+        "engineSerialNumber": "12345",
+        "faultCode": 32,
+        "description": "Leak in induction system",
+        "priority": 1
+    },
+    {
+        "engineSerialNumber": "12345",
+        "faultCode": 15,
+        "description": "Low voltage in spark plugs",
+        "priority": 2
+    }
+]

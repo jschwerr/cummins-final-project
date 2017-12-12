@@ -1,31 +1,54 @@
-<div class="container">
+<div class="container-fluid" ng-show="!hasFaultCodes">
     <div class="row">
-<!--
-        <div class="col-sm-6">
-            <h3>Preliminary Diagnoses</h3>
-            <table>
-                <tr>
-                    <th>Diagnosis</th>
-                    <th>Confidence</th>
-                </tr>
-            </table>
+        <div class="col-sm-12 action-needed" ng-if="!pairing">
+            <h1>Engine Diagnosis</h1>
+            <p>Pair with engine to begin diagnosis</p>
+            <button ng-click="pairWithEngine()" class="btn btn-primary">Pair with engine</button>
         </div>
--->
-        <div class="col-sm-6">
-            <p>Pair with engine to see telematics and diagnose issues</p>
-            <button class="btn btn-primary">Pair with engine</button>
+        <div class="col-sm-12 action-needed" ng-if="pairing">
+            <h3>Pairing in Progress</h3>
+            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         </div>
-<!--
-        <div class="col-sm-6">
-            <h3>Actual Diagnoses</h3>
-            <table>
-                <tr>
-                    <th>Diagnosis</th>
-                    <th>Confidence</th>
-                </tr>
-            </table>
-        </div>
--->
     </div>
-    
+</div>
+
+<div class="container-fluid" ng-show="hasFaultCodes">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="col-sm-12">
+                <h3>Prioritized Fault Codes</h3>
+                <table id="dg-table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="dg-fault-code">Fault Code</th>
+                            <th class="dg-priority">Priority</th>
+                            <th class="dg-description">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="fault in engineFaultCodes">
+                            <td class="dg-fault-code">{{fault.faultCode}}</td>
+                            <td class="dg-priority">{{fault.priority}}</td>
+                            <td class="dg-description">{{fault.description}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="col-sm-12">
+                <h3>Engine KPIs</h3>
+                <div class="form-group">
+                    <span style="white-space: nowrap; width: 100%;">
+                        <label for="inKpi" style="margin-right: 10px;">Select a KPI: </label>
+                        <select ng-model="selectedKPI" ng-change="loadChart()" style="display:inline-block; width:40%;" class="form-control" id="inKpi">
+                            <option value=""></option>
+                            <option ng-repeat="kpi in kpis" value="{{kpi}}">{{kpi | decamelize }}</option>
+                        </select>
+                    </span>
+                </div>
+                <div id="diagnose-chart"></div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="col-sm-12">
+                <h3>Recommended Plan</h3>
+                <table>
+                    <tr>
+                        <td>Summary: {{recommended.summary}}</td>
+                    </tr>
+                    <tr>
+                        <td>Confidence Score: {{recommended.confidenceScore * 100}}%</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br/>
+                            Steps:
+                            <div ng-repeat="step in recommended.steps">
+                                <strong>{{$index + 1}}.</strong> {{step.title}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <a class="btn btn-primary" ui-sref="repair">Select Plan</a>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="col-sm-12">
+                <h3>Other Potential Job Plans</h3>
+                <table id="jp-other-table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Plan Summary</th>
+                            <th>Confidence Score</th>
+                            <th class="jp-link"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="plan in other" ng-click="toggleIndex($index)">
+                            <td>
+                                {{plan.summary}}
+                                <div ng-show="jpIndex == $index">
+                                    <br/>
+                                    Steps:
+                                    <div ng-repeat="step in plan.steps">
+                                        <strong>{{$index + 1}}.</strong> {{step.title}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{plan.confidenceScore * 100}}%</td>
+                            <td class="jp-link"><a href="">Select Plan</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
